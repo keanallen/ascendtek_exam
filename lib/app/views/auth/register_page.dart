@@ -1,11 +1,10 @@
 import 'package:ascendtek_exam/app/controller/auth_controller.dart';
-import 'package:ascendtek_exam/app/views/auth/register_page.dart';
 import 'package:ascendtek_exam/app/widgets/custom_textbox.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class LoginPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Text(
-                    "Login Page",
+                    "Register Page",
                     style: Get.textTheme.headline6,
                   ),
                 ),
@@ -51,7 +50,7 @@ class LoginPage extends StatelessWidget {
                 height: 40,
                 margin: const EdgeInsets.only(top: 20),
                 child: TextButton(
-                    onPressed: () => Get.to(() => const RegisterPage()),
+                    onPressed: () => controller.login(),
                     child: const Text('Create an account')),
               )
             ],
