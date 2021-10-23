@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.3.8
   parse_server_sdk_flutter: ^3.1.0
+  image_picker: ^0.8.4+3
 
 dev_dependencies:
   flutter_test:
