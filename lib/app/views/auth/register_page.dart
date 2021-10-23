@@ -10,6 +10,9 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController controller = Get.put<AuthController>(AuthController());
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Register Page"),
+      ),
       body: SizedBox(
         width: context.width,
         height: context.height,
@@ -18,22 +21,18 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Text(
-                    "Register Page",
-                    style: Get.textTheme.headline6,
-                  ),
-                ),
-              ),
               CustomTextbox(
-                controller: controller.userNameTextField,
-                label: 'Username',
+                controller: controller.nameTextField,
+                label: 'Name',
                 prefixIcon: Icons.people,
               ),
               CustomTextbox(
-                controller: controller.userPassTextField,
+                controller: controller.emailTextField,
+                label: 'Email',
+                prefixIcon: Icons.mail,
+              ),
+              CustomTextbox(
+                controller: controller.passwordTextField,
                 label: 'Password',
                 prefixIcon: Icons.lock,
                 isPassword: true,
@@ -41,18 +40,14 @@ class RegisterPage extends StatelessWidget {
               SizedBox(
                 width: context.width,
                 height: 40,
-                child: ElevatedButton(
-                    onPressed: () => controller.login(),
-                    child: const Text('LOGIN')),
+                child: Obx(() => ElevatedButton(
+                    onPressed: controller.requesting.value
+                        ? null
+                        : () => controller.register(),
+                    child: Text(controller.requesting.value
+                        ? 'REGISTERING...'
+                        : 'REGISTER'))),
               ),
-              Container(
-                width: context.width,
-                height: 40,
-                margin: const EdgeInsets.only(top: 20),
-                child: TextButton(
-                    onPressed: () => controller.login(),
-                    child: const Text('Create an account')),
-              )
             ],
           ),
         ),

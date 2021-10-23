@@ -30,8 +30,8 @@ class LoginPage extends StatelessWidget {
               ),
               CustomTextbox(
                 controller: controller.userNameTextField,
-                label: 'Username',
-                prefixIcon: Icons.people,
+                label: 'Email',
+                prefixIcon: Icons.email,
               ),
               CustomTextbox(
                 controller: controller.userPassTextField,
@@ -42,9 +42,13 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 width: context.width,
                 height: 40,
-                child: ElevatedButton(
-                    onPressed: () => controller.login(),
-                    child: const Text('LOGIN')),
+                child: Obx(() => ElevatedButton(
+                    onPressed: controller.requesting.value
+                        ? null
+                        : () => controller.login(),
+                    child: Text(controller.requesting.value
+                        ? 'LOGGING IN...'
+                        : 'LOGIN'))),
               ),
               Container(
                 width: context.width,
