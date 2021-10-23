@@ -1,4 +1,5 @@
 import 'package:ascendtek_exam/app/controller/home_controller.dart';
+import 'package:ascendtek_exam/app/views/home/upload_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,10 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Get.to(() => const UploadPage()),
+        child: const Icon(Icons.add_a_photo_outlined),
       ),
       drawer: Drawer(
         child: Obx(
