@@ -1,3 +1,4 @@
+import 'package:ascendtek_exam/app/views/home/home_page.dart';
 import 'package:ascendtek_exam/app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,7 @@ class AuthController extends GetxController {
     var response = await user.login();
     requesting.value = false;
     if (response.success) {
-      print(response.results);
+      Get.offAll(() => const HomePage());
     } else {
       CustomDialog.alert(
           title: 'Failed',
