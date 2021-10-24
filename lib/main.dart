@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:ascendtek_exam/app/views/auth/login_page.dart';
-import 'package:ascendtek_exam/app/views/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
