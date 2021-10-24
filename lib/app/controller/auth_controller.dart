@@ -1,3 +1,4 @@
+import 'package:ascendtek_exam/app/views/auth/login_page.dart';
 import 'package:ascendtek_exam/app/views/home/home_page.dart';
 import 'package:ascendtek_exam/app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,28 @@ class AuthController extends GetxController {
   TextEditingController passwordTextField = TextEditingController();
   var requesting = false.obs;
 
+  @override
+  void onInit() async {
+    var getUser = await ParseUser.currentUser();
+
+    print("=================================================");
+    print(getUser);
+    print("=================================================");
+    if (getUser == null) {
+      Get.offAll(() => const LoginPage());
+    } else {
+      Get.offAll(() => const HomePage());
+    }
+
+    super.onInit();
+  }
+
   void login() async {
     if (userNameTextField.text.trim().isEmpty ||
         userPassTextField.text.trim().isEmpty) {
       CustomDialog.alert(
           title: 'Warning', content: 'Username/Password is required');
+      return;
     }
     requesting.value = true;
 

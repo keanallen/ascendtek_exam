@@ -11,6 +11,7 @@ void main() async {
   await Parse().initialize(
     '7uDEPqvelYXbj8cmuYdAiq4oQXN3d2fmjpmEYVp6',
     'https://ascendtekapp.b4a.io',
+    liveQueryUrl: 'https://ascendtekapp.b4a.io',
     clientKey: 'QKhobcYdb1MO59Iqsf2c3IePMxXLREQA7qkX2tZy',
     debug: true,
     autoSendSessionId: true,
@@ -29,8 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: const LoginPage(),
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
