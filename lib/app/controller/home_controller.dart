@@ -13,29 +13,56 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 class HomeController extends GetxController {
   var user = ParseUser(null, null, null).obs;
+  var deletedPost = [].obs;
   var searchTag = TextEditingController();
   var tags = <TagModel>[].obs;
+  var queryTags = <TagModel>[].obs;
   var selectedTags = <TagModel>[].obs;
   var filteredTags = <TagModel>[].obs;
   var imagePath = "".obs;
   var tempLiked = [].obs;
   var viewedPost = [].obs;
+  var isChanged = false.obs;
   XFile? image;
 
   @override
   void onInit() async {
-    super.onInit();
     var getUser = await ParseUser.currentUser();
 
-    print("=================================================");
-    print(getUser);
-    print("=================================================");
     if (getUser == null) {
       Get.offAll(() => const LoginPage());
     } else {
       user.value = getUser;
+
       getTags();
     }
+
+    super.onInit();
+  }
+
+  void addQueryTag(String tag) {
+    var matchTag = tags.where(
+        (element) => element.tagname.toLowerCase().contains(tag.toLowerCase()));
+
+    var existingTag = queryTags.where(
+        (element) => element.tagname.toLowerCase().contains(tag.toLowerCase()));
+
+    if (matchTag.isNotEmpty) {
+      if (existingTag.isEmpty) {
+        queryTags.add(matchTag.first);
+      } else {
+        if (existingTag.first.tagname.toLowerCase() != tag.toLowerCase()) {
+          queryTags.add(matchTag.first);
+        }
+      }
+    }
+  }
+
+  QueryBuilder<ParseObject> generateQuery() {
+    return QueryBuilder(ParseObject("Uploads"))
+      ..whereContainedIn('tags', queryTags)
+      ..includeObject(["uploader"])
+      ..orderByAscending('createdAt');
   }
 
   getNameAvatar({String baseName = ''}) {
@@ -165,7 +192,7 @@ class HomeController extends GetxController {
 
     //post.addRelation('likes', [me]);
     post.setRemove('liked', me!.objectId);
-    ;
+
     var response = await post.save();
     if (response.success) {
       print('UNLiked!');
@@ -184,6 +211,14 @@ class HomeController extends GetxController {
         viewedPost.add(postId);
       }
     }
+  }
+
+  void deletePost(String postId) async {
+    ParseObject uploads = ParseObject("Uploads");
+    uploads.objectId = postId;
+    deletedPost.add(postId);
+    await uploads.delete();
+    Get.close(1);
   }
 
   void logout() async {
