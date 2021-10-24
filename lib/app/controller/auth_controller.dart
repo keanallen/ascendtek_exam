@@ -19,9 +19,6 @@ class AuthController extends GetxController {
   void onInit() async {
     var getUser = await ParseUser.currentUser();
 
-    print("=================================================");
-    print(getUser);
-    print("=================================================");
     if (getUser == null) {
       Get.offAll(() => const LoginPage());
     } else {
